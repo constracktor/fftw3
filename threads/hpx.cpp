@@ -33,7 +33,7 @@
 #include <hpx/hpx_start.hpp>
 #include <hpx/runtime_local/run_as_hpx_thread.hpp>
 #include <hpx/execution.hpp>
-
+#include <hpx/hpx_init_params.hpp>
 #endif
 
 extern "C" {
@@ -47,7 +47,9 @@ int X(ithreads_init)(void)
      
      std::string count(nthreads_cstr); 
      std::string thread_arg = "--hpx:threads=" + count;
-     return hpx::start( nullptr, 1, thread_arg.c_str() );
+     hpx::init_params params;
+     params.cfg = { thread_arg };
+     return hpx::start(nullptr, 0, nullptr, params);
 }
 
 /* Distribute a loop from 0 to loopmax-1 over nthreads threads.
