@@ -121,7 +121,7 @@ void X(spawn_loop)(int loopmax, int nthr, spawn_function proc, void *data)
                   if (sdata[0].max > loopmax) {
                       sdata[0].max = loopmax;
                   }
-                  sdata[0].thr_num = tid;
+                  sdata[0].thr_num = 0;
                   sdata[0].data = data;
                   proc(&sdata[0]);
               }
@@ -142,7 +142,7 @@ void X(threads_cleanup)(void)
 static hpx::mutex planner_mutex;
 static hpx::mutex install_planner_hooks_mutex;
 static std::unique_lock<hpx::mutex> planner_lock = std::unique_lock<hpx::mutex>(planner_mutex);
-static bool planner_hooks_installed = false
+static bool planner_hooks_installed = false;
 
 static void lock_planner_mutex(void)
 {
